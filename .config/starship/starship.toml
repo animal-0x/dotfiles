@@ -1,4 +1,3 @@
-# Add at top of config
 command_timeout = 100
 scan_timeout = 30
 format = """
@@ -44,8 +43,8 @@ $typst\
 $typescript\
 $zig\
 [](fg:#212736 bg:#1d2230)\
-$cmd_duration\
 $time\
+$cmd_duration\
 $battery\
 [ ](fg:#1d2230)\
 \n$character"""
@@ -202,9 +201,14 @@ format = '[[ $symbol ($version) ](fg:#769ff0 bg:#212736)]($style)'
 
 [python]
 disabled = false
+format = '[[ ${symbol}${pyenv_prefix}(${version} )(\($virtualenv\) )](fg:#769ff0 bg:#212736)]($style)'
 symbol = "󰌠 "
+pyenv_version_name = true
 style = "bg:#212736"
-format = '[[ $symbol ($version) ](fg:#769ff0 bg:#212736)]($style)'
+pyenv_prefix = "pyenv "
+detect_extensions = ["py", "pyc", "pyd"]
+detect_files = ["requirements.txt", "Pipfile", "pyproject.toml", "Poetry.lock", "setup.py", "setup.cfg", "tox.ini"]
+detect_folders = [".venv", "venv", ".env", "env"]
 
 [ruby]
 disabled = true
@@ -287,12 +291,23 @@ style = "bg:#212736"
 format = '[[ $symbol ($version) ](fg:#769ff0 bg:#212736)]($style)'
 
 [time]
-disabled = true
-time_format = "%H:%M" 
+disabled = false
+time_format = "%H:%M"
+format = '[[$time ](fg:#769ff0 bg:#1d2230)]($style)'
+style = "bg:#1d2230"
+
+# 󱑖  (digital)
+# 󱑋  (round)
+# 󰥔  (stopwatch style)
+# 󰅐  (simple)
+# 󱑎  (modern)
+# 󱑌  (classic)
+# 󱪺  (elegant)
+# 󰔛  (minimal)
 
 [cmd_duration]
-min_time = 1
-format = '[[$duration](fg:#769ff0 bg:#1d2230)]($style)'
+min_time = 500
+format = '[[$duration ](fg:#769ff0 bg:#1d2230)]($style)'
 style = "bg:#1d2230"
 show_milliseconds = true
 
@@ -300,7 +315,8 @@ show_milliseconds = true
 full_symbol = "󰁹 "
 charging_symbol = "󰂄 "
 discharging_symbol = "󰂃 "
-format = '[[$symbol$percentage](fg:#769ff0 bg:#1d2230)]($style)'
+# format = '[[$percentage$symbol ](fg:#769ff0 bg:#1d2230)]($style)'
+format = '[[$percentage ](fg:#769ff0 bg:#1d2230)]($style)'
 style = "bg:#1d2230"
 
 [[battery.display]]
