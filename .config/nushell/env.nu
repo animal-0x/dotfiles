@@ -33,16 +33,21 @@ $env.PATH = ($env.PATH |
 # $env.NODE_PATH = ($env.XDG_DATA_HOME | path join "node")
 # $env.PNPM_HOME = ($env.XDG_DATA_HOME | path join "pnpm")
 
+
 # Starship prompt setup
 $env.STARSHIP_SHELL = "nu"
-$env.PROMPT_COMMAND = { || starship prompt }
-$env.STARSHIP_CONFIG = ($env.XDG_CONFIG_HOME | path join "starship" "starship.toml")
 
-$env.PROMPT_COMMAND_RIGHT = { || "" }
-$env.PROMPT_INDICATOR = { || "" }
-$env.PROMPT_INDICATOR_VI_INSERT = { || ": " }
-$env.PROMPT_INDICATOR_VI_NORMAL = { || "> " }
-$env.PROMPT_MULTILINE_INDICATOR = { || "::: " }
+def create_left_prompt [] {
+    starship prompt --cmd-duration $env.CMD_DURATION_MS $'--status=($env.LAST_EXIT_CODE)'
+}
+
+$env.PROMPT_COMMAND = { || create_left_prompt }
+$env.STARSHIP_CONFIG = ($env.XDG_CONFIG_HOME | path join "starship" "starship.toml")
+$env.PROMPT_COMMAND_RIGHT = ""
+$env.PROMPT_INDICATOR = ""
+$env.PROMPT_INDICATOR_VI_INSERT = ": "
+$env.PROMPT_INDICATOR_VI_NORMAL = "〉"
+$env.PROMPT_MULTILINE_INDICATOR = "::: "
 
 # Hook configurations
 $env.config = ($env.config? | default {} | merge {

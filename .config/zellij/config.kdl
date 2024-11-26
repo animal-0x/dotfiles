@@ -250,4 +250,3 @@ serialization_interval 120
 default_mode "normal"
 simplified_ui false
 default_layout "compact"
-default_shell "$SHELL"
