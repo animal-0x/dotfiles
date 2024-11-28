@@ -293,3 +293,5 @@ $env.config = {
         }
     ]
 }
+
+use '/home/animal/.config/broot/launcher/nushell/br' *
