@@ -1,0 +1,70 @@
+
+# basic colors
+"ui.background" = { bg = "#090c0c" }
+"ui.text" = "#a3aed2"
+"ui.text.focus" = { fg = "#a3aed2", modifiers = ["bold"] }
+"ui.selection" = { bg = "#394260" }
+"ui.cursor" = { bg = "#769ff0", fg = "#090c0c" }
+"ui.cursor.primary" = { bg = "#769ff0", fg = "#090c0c" }
+"ui.cursor.match" = { bg = "#394260", fg = "#a3aed2" }
+"ui.linenr" = "#394260"
+"ui.linenr.selected" = "#769ff0"
+"ui.statusline" = { bg = "#1d2230", fg = "#a3aed2" }
+"ui.statusline.inactive" = { bg = "#1d2230", fg = "#394260" }
+"ui.popup" = { bg = "#1d2230" }
+"ui.window" = { bg = "#1d2230" }
+"ui.help" = { bg = "#1d2230", fg = "#a3aed2" }
+"ui.bufferline" = { bg = "#1d2230", fg = "#394260" }
+"ui.bufferline.active" = { bg = "#090c0c", fg = "#a3aed2", modifiers = ["bold"] }
+"ui.virtual" = "#394260"
+"ui.virtual.ruler" = { bg = "#1d2230" }
+"ui.virtual.indent-guide" = "#1d2230"
+"ui.menu" = { bg = "#1d2230", fg = "#a3aed2" }
+"ui.menu.selected" = { bg = "#394260", fg = "#a3aed2" }
+"ui.menu.scroll" = { bg = "#1d2230", fg = "#394260" }
+
+# syntax highlighting
+"comment" = "#394260"
+"constant" = "#a3aed2"
+"constant.numeric" = "#769ff0"
+"constant.character.escape" = "#769ff0"
+"string" = "#769ff0"
+"variable" = "#a3aed2"
+"variable.parameter" = "#a3aed2"
+"variable.builtin" = "#769ff0"
+"type" = "#769ff0"
+"type.builtin" = "#769ff0"
+"attribute" = "#769ff0"
+"function" = "#a3aed2"
+"function.builtin" = "#769ff0"
+"function.macro" = "#769ff0"
+"keyword" = "#769ff0"
+"keyword.control" = "#769ff0"
+"keyword.function" = "#769ff0"
+"keyword.operator" = "#769ff0"
+"operator" = "#769ff0"
+"namespace" = "#769ff0"
+"punctuation" = "#394260"
+"punctuation.delimiter" = "#394260"
+"punctuation.bracket" = "#394260"
+"special" = "#769ff0"
+"label" = "#769ff0"
+
+# markup
+"markup.heading" = "#769ff0"
+"markup.bold" = { fg = "#769ff0", modifiers = ["bold"] }
+"markup.italic" = { fg = "#a3aed2", modifiers = ["italic"] }
+"markup.link.url" = { fg = "#394260", modifiers = ["underlined"] }
+"markup.link.text" = "#769ff0"
+"markup.raw" = "#769ff0"
+
+# diagnostics
+"diagnostic" = { modifiers = ["underlined"] }
+"error" = "#ff757f"
+"warning" = "#a3aed2"
+"info" = "#769ff0"
+"hint" = "#394260"
+
+"diff.plus" = "#769ff0"
+"diff.minus" = "#ff757f"
+"diff.delta" = "#394260"
