@@ -1,4 +1,4 @@
-theme = "custom"
+theme = "dark_high_contrast"
 
 [editor]
 line-number = "relative"
@@ -7,7 +7,12 @@ bufferline = "multiple"
 true-color = true
 color-modes = true
 cursorline = true
-rulers = [80]
+rulers = [80,120]
+auto-format= true
+
+[editor.auto-save]
+enable = true
+timeout = 1000
 
 [editor.cursor-shape]
 insert = "bar"
@@ -26,27 +31,20 @@ enable = true
 display-messages = true
 display-inlay-hints = true
 
+
 [editor.statusline]
-left = ["mode", "spinner", "file-name", "file-modification-indicator"]
+left = ["mode", "spinner", "file-name", "file-modification-indicator", "version-control"]
 center = ["diagnostics", "workspace-diagnostics"]
 right = ["selections", "position", "file-encoding"]
 
-[keys.normal]
-esc = ["collapse_selection", "keep_primary_selection"]
-";" = "command_mode"
-"C-/" = "toggle_comments"
-"C-s" = ":w"
-"C-q" = ":q"
+[editor.auto-pairs]
+'(' = ')'
+'{' = '}'
+'[' = ']'
+'"' = '"'
+'`' = '`'
+'<' = '>'
 
-[keys.insert]
-"C-c" = "normal_mode"
-
-[editor.file-picker]
-hidden = false
-parents = true
-ignore = true
-git-ignore = true
-
-[editor.whitespace]
-render = "all"
-characters = { space = "·", nbsp = "⍽", tab = "→", newline = "⏎", tabpad = "·" }
+# [editor.whitespace]
+# render = "all"
+# characters = { space = "·", nbsp = "⍽", tab = "→", newline = "⏎", tabpad = "·" }
