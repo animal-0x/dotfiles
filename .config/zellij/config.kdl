@@ -242,8 +242,24 @@ load_plugins {
 // Choose the theme that is specified in the themes section.
 // Default: default
 // 
-// theme "custom"
+// theme "tokyo-night-storm"
  
+// themes {
+//     tokyo-night-storm {
+//         fg 169 177 214
+//         bg 36 40 59
+//         black 56 62 90
+//         red 249 51 87
+//         green 158 206 106
+//         yellow 224 175 104
+//         blue 122 162 247
+//         magenta 187 154 247
+//         cyan 42 195 222
+//         white 192 202 245
+//         orange 255 158 100
+//     }
+// }
+
 // Choose the base input mode of zellij.
 // Default: normal
 // 
@@ -287,7 +303,7 @@ default_mode "locked"
 //   - true (default, enabled)
 //   - false
 // 
-// pane_frames false
+pane_frames false
  
 // When attaching to an existing session with other users,
 // should the session be mirrored (true)
@@ -339,7 +355,7 @@ default_mode "locked"
 // Enable automatic copying (and clearing) of selection when releasing mouse
 // Default: true
 // 
-// copy_on_select true
+copy_on_select true
  
 // Path to the default editor to use to edit pane scrollbuffer
 // Default: $EDITOR or $VISUAL
@@ -356,7 +372,7 @@ default_mode "locked"
 // if it is already running or creates it otherwise.
 // Default: false
 // 
-// attach_to_session true
+attach_to_session true
  
 // Toggle between having Zellij lay out panes according to a predefined set of layouts whenever possible
 // Options:
@@ -408,36 +424,3 @@ default_mode "locked"
 // Default: true (if the host terminal supports it)
 // 
 // support_kitty_keyboard_protocol false
-themes {
-    custom {
-        fg "#a3aed2"
-        bg "#090c0c"
-        black "#1d2230"
-        red "#ff757f"
-        green "#769ff0"
-        yellow "#a3aed2"
-        blue "#394260"
-        magenta "#a3aed2"
-        cyan "#769ff0"
-        white "#a3aed2"
-        orange "#ff757f"
-    }
-}
-
-// Apply theme and styling
-theme "custom"
-pane_frames false
-
-// Unified styling for tabs and bars
-ui {
-    pane_frames {
-        // hide_session_name true
-        rounded_corners true
-    }
-}
-
-plugins {
-    tab-bar { path "tab-bar"; }
-    status-bar { path "status-bar"; }
-    compact-bar { path "compact-bar"; }
-}

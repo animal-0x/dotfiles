@@ -3,10 +3,10 @@ scan_timeout = 30
 format = """
 [░▒▓](#a3aed2)\
 $directory\
-[](bg:#394260 fg:#a3aed2)\
+[](bg:#282F46 fg:#a3aed2)\
 $git_branch\
 $git_status\
-[](fg:#394260 bg:#212736)\
+[](fg:#282F46 bg:#1d2230)\
 $azure\
 $bun\
 $c\
@@ -42,7 +42,7 @@ $terraform\
 $typst\
 $typescript\
 $zig\
-[](fg:#212736 bg:#1d2230)\
+[](fg:#1d2230 bg:#1d2230)\
 $time\
 $cmd_duration\
 $battery\
@@ -67,12 +67,12 @@ truncation_symbol = "…/"
 
 [git_branch]
 symbol = ""
-style = "bg:#394260"
-format = '[[ $symbol $branch ](fg:#769ff0 bg:#394260)]($style)'
+style = "bg:#282F46"
+format = '[[ $symbol $branch ](fg:#66d9ef bg:#282f46)]($style)'
 
 [git_status]
-style = "bg:#394260"
-format = '[[($all_status$ahead_behind )](fg:#769ff0 bg:#394260)]($style)'
+style = "bg:#282F46"
+format = '[[($all_status$ahead_behind )](fg:#66d9ef bg:#282F46)]($style)'
 
 # Cloud & Infrastructure
 [azure]
@@ -293,7 +293,7 @@ format = '[[ $symbol ($version) ](fg:#769ff0 bg:#212736)]($style)'
 [time]
 disabled = false
 time_format = "%H:%M"
-format = '[[$time ](fg:#769ff0 bg:#1d2230)]($style)'
+format = '[[$time ](fg:#66D9EF bg:#1d2230)]($style)'
 style = "bg:#1d2230"
 
 # 󱑖  (digital)
@@ -307,7 +307,7 @@ style = "bg:#1d2230"
 
 [cmd_duration]
 min_time = 500
-format = '[[$duration ](fg:#769ff0 bg:#1d2230)]($style)'
+format = '[[$duration ](fg:#66D9EF bg:#1d2230)]($style)'
 style = "bg:#1d2230"
 show_milliseconds = true
 
@@ -316,7 +316,7 @@ full_symbol = "󰁹 "
 charging_symbol = "󰂄 "
 discharging_symbol = "󰂃 "
 # format = '[[$percentage$symbol ](fg:#769ff0 bg:#1d2230)]($style)'
-format = '[[$percentage ](fg:#769ff0 bg:#1d2230)]($style)'
+format = '[[$percentage ](fg:#66D9EF bg:#1d2230)]($style)'
 style = "bg:#1d2230"
 
 [[battery.display]]
