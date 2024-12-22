@@ -9,7 +9,7 @@ mkdir -p ~/.config
 mkdir -p ~/dev/{lab,oss,work,rice}
 
 # Create configuration directories
-mkdir -p ~/.config/{nushell,foot,helix,zellij/layouts,starship}
+mkdir -p ~/.config/{nushell,foot,helix,zellij/layouts,starship,alacritty}
 
 # Create SSH directories with proper permissions
 mkdir -p ~/.ssh/{config.d,controlmasters}

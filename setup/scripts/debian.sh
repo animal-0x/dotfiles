@@ -53,10 +53,10 @@ if is_wayland; then
     sudo ninja -C build install
     cd ..
     rm -rf foot
-else
-    # Install alacritty from apt
-    sudo apt install -y alacritty
 fi
+# Install alacritty from apt
+sudo apt install -y alacritty
+
 
 # Install mise
 sudo install -dm 755 /etc/apt/keyrings

@@ -3,6 +3,7 @@
 # Install core packages using pacman
 sudo pacman -S --needed \
     foot \
+    alacritty \
     helix \
     zellij \
     nushell \

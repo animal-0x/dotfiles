@@ -7,6 +7,7 @@ for file in \
     "$HOME/.config/nushell/env.nu" \
     "$HOME/.config/nushell/mise.nu" \
     "$HOME/.config/foot/foot.ini" \
+    "$HOME/.config/alacritty/alacritty.yml" \
     "$HOME/.config/helix/config.toml" \
     "$HOME/.config/zellij/config.kdl" \
     "$HOME/.config/starship/starship.toml" \
@@ -25,6 +26,7 @@ ln -sf "$HOME/dev/rice/dotfiles/.config/nushell/config.nu" "$HOME/.config/nushel
 ln -sf "$HOME/dev/rice/dotfiles/.config/nushell/env.nu" "$HOME/.config/nushell/env.nu"
 ln -sf "$HOME/dev/rice/dotfiles/.config/nushell/mise.nu" "$HOME/.config/nushell/mise.nu"
 ln -sf "$HOME/dev/rice/dotfiles/.config/foot/foot.ini" "$HOME/.config/foot/foot.ini"
+ln -sf "$HOME/dev/rice/dotfiles/.config/alacritty/alacritty.yml" "$HOME/.config/alacritty/alacritty.yml"
 ln -sf "$HOME/dev/rice/dotfiles/.config/helix/config.toml" "$HOME/.config/helix/config.toml"
 ln -sf "$HOME/dev/rice/dotfiles/.config/zellij/config.kdl" "$HOME/.config/zellij/config.kdl"
 ln -sf "$HOME/dev/rice/dotfiles/.config/starship/starship.toml" "$HOME/.config/starship/starship.toml"
