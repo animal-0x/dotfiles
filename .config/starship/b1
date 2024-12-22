@@ -1,0 +1,332 @@
+command_timeout = 100
+scan_timeout = 30
+format = """
+[░▒▓](#a3aed2)\
+$directory\
+[](bg:#282F46 fg:#a3aed2)\
+$git_branch\
+$git_status\
+[](fg:#282F46 bg:#1d2230)\
+$azure\
+$bun\
+$c\
+$cmake\
+$conda\
+$container\
+$dart\
+$deno\
+$docker_context\
+$elixir\
+$elm\
+$golang\
+$gradle\
+$haskell\
+$java\
+$kotlin\
+$kubernetes\
+$lua\
+$nim\
+$nodejs\
+$ocaml\
+$package\
+$perl\
+$php\
+$pulumi\
+$purescript\
+$python\
+$ruby\
+$rust\
+$scala\
+$swift\
+$terraform\
+$typst\
+$typescript\
+$zig\
+[](fg:#1d2230 bg:#1d2230)\
+$time\
+$cmd_duration\
+$battery\
+[ ](fg:#1d2230)\
+\n$character"""
+
+[directory]
+style = "bg:#a3aed2 fg:#090c0c"
+format = "[ $path ]($style)"
+truncation_length = 3
+truncation_symbol = "…/"
+[directory.substitutions]
+"Documents" = "󰈙 "
+"Downloads" = "󰇚 "
+"Music" = "󰝚 "
+"Pictures" = "󰉔 "
+"Videos" = "󰕧 "
+"dev" = "󰲋 "
+"rice" = "󰟪 "
+".config" = "󱂀 "
+"git" = "󰊢 "
+
+[git_branch]
+symbol = ""
+style = "bg:#282F46"
+format = '[[ $symbol $branch ](fg:#66d9ef bg:#282f46)]($style)'
+
+[git_status]
+style = "bg:#282F46"
+format = '[[($all_status$ahead_behind )](fg:#66d9ef bg:#282F46)]($style)'
+
+# Cloud & Infrastructure
+[azure]
+disabled = true
+symbol = "󰠅 "
+style = "bg:#212736"
+format = '[[ $symbol ($version) ](fg:#769ff0 bg:#212736)]($style)'
+
+[docker_context]
+disabled = true
+symbol = "󰡨 "
+style = "bg:#212736"
+format = '[[ $symbol ($version) ](fg:#769ff0 bg:#212736)]($style)'
+
+[kubernetes]
+disabled = true
+symbol = "󱃾 "
+style = "bg:#212736"
+format = '[[ $symbol ($context) ](fg:#769ff0 bg:#212736)]($style)'
+
+[terraform]
+disabled = true
+symbol = "󱁢 "
+style = "bg:#212736"
+format = '[[ $symbol ($version) ](fg:#769ff0 bg:#212736)]($style)'
+
+# System Languages
+[c]
+disabled = true
+symbol = "󰙱 "
+style = "bg:#212736"
+format = '[[ $symbol ($version) ](fg:#769ff0 bg:#212736)]($style)'
+
+[cmake]
+disabled = true
+symbol = "󰔷 "
+style = "bg:#212736"
+format = '[[ $symbol ($version) ](fg:#769ff0 bg:#212736)]($style)'
+
+[golang]
+disabled = true
+symbol = "󰟓 "
+style = "bg:#212736"
+format = '[[ $symbol ($version) ](fg:#769ff0 bg:#212736)]($style)'
+
+[rust]
+disabled = true
+symbol = "󱘗 "
+style = "bg:#212736"
+format = '[[ $symbol ($version) ](fg:#769ff0 bg:#212736)]($style)'
+
+[zig]
+disabled = true
+symbol = "󱐋 "
+style = "bg:#212736"
+format = '[[ $symbol ($version) ](fg:#769ff0 bg:#212736)]($style)'
+
+# Web Development
+[bun]
+disabled = true
+symbol = "🥟 "
+style = "bg:#212736"
+format = '[[ $symbol ($version) ](fg:#769ff0 bg:#212736)]($style)'
+
+[deno]
+disabled = true
+symbol = "󰉍 "
+style = "bg:#212736"
+format = '[[ $symbol ($version) ](fg:#769ff0 bg:#212736)]($style)'
+
+[nodejs]
+disabled = false
+symbol = ""
+style = "bg:#212736"
+format = '[[ $symbol ($version) ](fg:#769ff0 bg:#212736)]($style)'
+
+[typescript]
+disabled = false
+symbol = "󰛦 "
+style = "bg:#212736"
+format = '[[ $symbol ($version) ](fg:#769ff0 bg:#212736)]($style)'
+
+# JVM Languages
+[gradle]
+disabled = true
+symbol = "󰏗 "
+style = "bg:#212736"
+format = '[[ $symbol ($version) ](fg:#769ff0 bg:#212736)]($style)'
+
+[java]
+disabled = true
+symbol = "󰬷 "
+style = "bg:#212736"
+format = '[[ $symbol ($version) ](fg:#769ff0 bg:#212736)]($style)'
+
+[kotlin]
+disabled = true
+symbol = "󱈙 "
+style = "bg:#212736"
+format = '[[ $symbol ($version) ](fg:#769ff0 bg:#212736)]($style)'
+
+[scala]
+disabled = true
+symbol = "󰘜 "
+style = "bg:#212736"
+format = '[[ $symbol ($version) ](fg:#769ff0 bg:#212736)]($style)'
+
+# Scripting Languages
+[lua]
+disabled = true
+symbol = "󰢱 "
+style = "bg:#212736"
+format = '[[ $symbol ($version) ](fg:#769ff0 bg:#212736)]($style)'
+
+[perl]
+disabled = true
+symbol = "󰨎 "
+style = "bg:#212736"
+format = '[[ $symbol ($version) ](fg:#769ff0 bg:#212736)]($style)'
+
+[php]
+disabled = true
+symbol = "󰌟 "
+style = "bg:#212736"
+format = '[[ $symbol ($version) ](fg:#769ff0 bg:#212736)]($style)'
+
+[python]
+disabled = false
+format = '[[ ${symbol}${pyenv_prefix}(${version} )(\($virtualenv\) )](fg:#769ff0 bg:#212736)]($style)'
+symbol = "󰌠 "
+pyenv_version_name = true
+style = "bg:#212736"
+pyenv_prefix = "pyenv "
+detect_extensions = ["py", "pyc", "pyd"]
+detect_files = ["requirements.txt", "Pipfile", "pyproject.toml", "Poetry.lock", "setup.py", "setup.cfg", "tox.ini"]
+detect_folders = [".venv", "venv", ".env", "env"]
+
+[ruby]
+disabled = true
+symbol = "󰴭 "
+style = "bg:#212736"
+format = '[[ $symbol ($version) ](fg:#769ff0 bg:#212736)]($style)'
+
+# Functional Languages
+[elixir]
+disabled = true
+symbol = "󰪞 "
+style = "bg:#212736"
+format = '[[ $symbol ($version) ](fg:#769ff0 bg:#212736)]($style)'
+
+[elm]
+disabled = true
+symbol = "󰱷 "
+style = "bg:#212736"
+format = '[[ $symbol ($version) ](fg:#769ff0 bg:#212736)]($style)'
+
+[haskell]
+disabled = true
+symbol = "󰯚 "
+style = "bg:#212736"
+format = '[[ $symbol ($version) ](fg:#769ff0 bg:#212736)]($style)'
+
+[ocaml]
+disabled = true
+symbol = "󰛥 "
+style = "bg:#212736"
+format = '[[ $symbol ($version) ](fg:#769ff0 bg:#212736)]($style)'
+
+[purescript]
+disabled = true
+symbol = "󰯝 "
+style = "bg:#212736"
+format = '[[ $symbol ($version) ](fg:#769ff0 bg:#212736)]($style)'
+
+# Other Cool Stuff
+[conda]
+disabled = true
+symbol = "󰌠 "
+style = "bg:#212736"
+format = '[[ $symbol ($version) ](fg:#769ff0 bg:#212736)]($style)'
+
+[container]
+disabled = true
+symbol = "󰮄 "
+style = "bg:#212736"
+format = '[[ $symbol ($version) ](fg:#769ff0 bg:#212736)]($style)'
+
+[dart]
+disabled = true
+symbol = "󰴁 "
+style = "bg:#212736"
+format = '[[ $symbol ($version) ](fg:#769ff0 bg:#212736)]($style)'
+
+[package]
+disabled = true
+symbol = "󰏗 "
+style = "bg:#212736"
+format = '[[ $symbol ($version) ](fg:#769ff0 bg:#212736)]($style)'
+
+[pulumi]
+disabled = true
+symbol = "󰏗 "
+style = "bg:#212736"
+format = '[[ $symbol ($version) ](fg:#769ff0 bg:#212736)]($style)'
+
+[swift]
+disabled = true
+symbol = "󰛥 "
+style = "bg:#212736"
+format = '[[ $symbol ($version) ](fg:#769ff0 bg:#212736)]($style)'
+
+[typst]
+disabled = true
+symbol = "󰈮 "
+style = "bg:#212736"
+format = '[[ $symbol ($version) ](fg:#769ff0 bg:#212736)]($style)'
+
+[time]
+disabled = false
+time_format = "%H:%M"
+format = '[[$time ](fg:#66D9EF bg:#1d2230)]($style)'
+style = "bg:#1d2230"
+
+# 󱑖  (digital)
+# 󱑋  (round)
+# 󰥔  (stopwatch style)
+# 󰅐  (simple)
+# 󱑎  (modern)
+# 󱑌  (classic)
+# 󱪺  (elegant)
+# 󰔛  (minimal)
+
+[cmd_duration]
+min_time = 500
+format = '[[$duration ](fg:#66D9EF bg:#1d2230)]($style)'
+style = "bg:#1d2230"
+show_milliseconds = true
+
+[battery]
+full_symbol = "󰁹 "
+charging_symbol = "󰂄 "
+discharging_symbol = "󰂃 "
+# format = '[[$percentage$symbol ](fg:#769ff0 bg:#1d2230)]($style)'
+format = '[[$percentage ](fg:#66D9EF bg:#1d2230)]($style)'
+style = "bg:#1d2230"
+
+[[battery.display]]
+threshold = 10
+style = "fg:#ff757f bg:#212736" 
+
+[[battery.display]]
+threshold = 20
+style = "fg:#769ff0 bg:#212736"
+
+[[battery.display]]
+threshold = 30
+style = "fg:#a3aed2 bg:#212736"

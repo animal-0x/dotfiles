@@ -1,0 +1,38 @@
+# Performance-optimized high contrast theme
+format = """$directory\
+$git_branch\
+$git_status\
+$nodejs\
+$python\
+$cmd_duration\
+$line_break\
+$character"""
+
+# Reduce timeouts for better performance
+command_timeout = 50
+scan_timeout = 20
+
+# Directory
+[directory]
+style = "bold blue"
+truncation_length = 3
+truncation_symbol = "…/"
+read_only = " "
+
+# Git 
+[git_branch]
+format = "[$symbol$branch]($style) "
+symbol = " "
+style = "bold purple"
+
+[git_status]
+format = '([\[$all_status$ahead_behind\]]($style) )'
+style = "bold red"
+conflicted = "≠"
+ahead = "⇡"
+behind = "⇣"
+diverged = "⇕"
+modified = "!"
+staged = "+"
+renamed = "»"
+deleted = "✘"

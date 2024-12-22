@@ -1,6 +1,46 @@
 # Nushell Config File
 use ($nu.default-config-dir | path join mise.nu)
 
+
+# Define aliases
+alias .. = cd ..
+alias ... = cd ../..
+alias ll = ls -l
+alias la = ls -a
+
+# Development directories
+alias dev = cd ~/dev
+alias work = cd ~/dev/work
+alias oss = cd ~/dev/oss
+alias lab = cd ~/dev/lab
+alias rice = cd ~/dev/rice
+
+# Development tools
+alias hx = helix
+alias g = git
+alias gst = git status
+alias gd = git diff
+alias gc = git commit
+alias gp = git push
+alias gl = git log --graph --abbrev-commit --decorate --format=format:"%C(bold blue)%h%C(reset) - %C(bold green)(%ar)%C(reset) %C(white)%s%C(reset) %C(dim white)- %an%C(reset)%C(auto)%d%C(reset)" --all
+
+
+
+
+
+
+
+# System update alias (distro-aware)
+def update [] {
+    if (which yay | is-empty) == false {
+        run-external "sudo" "eos-rankmirrors"
+        run-external "yay" "--noconfirm"
+    } else if (which apt | is-empty) == false {
+        run-external "sudo" "apt" "update"
+        run-external "sudo" "apt" "upgrade"
+    }
+}
+
 # Pro-style theme focused on readability
 let dark_theme = {
     # Base formatting
@@ -126,7 +166,7 @@ $env.config = {
     
     # Core settings
     buffer_editor: "hx"  # Use helix as buffer editor
-    edit_mode: emacs     # Emacs keybindings for minimal shell editing
+    edit_mode:  emacs    # Emacs keybindings for minimal shell editing
     
     # Keybindings - Pro setup
     keybindings: [

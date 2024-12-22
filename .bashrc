@@ -22,8 +22,37 @@ eval "$(mise activate bash)"
 # Use starship prompt
 eval "$(starship init bash)"
 
-# Load aliases if they exist
-[ -f ~/.bash_aliases ] && source ~/.bash_aliases
+# Aliases
+# Navigation
+alias ..='cd ..'
+alias ...='cd ../..'
+alias ll='ls -lah'
+alias la='ls -A'
+
+# Development directories
+alias dev='cd ~/dev'
+alias work='cd ~/dev/work'
+alias oss='cd ~/dev/oss'
+alias lab='cd ~/dev/lab'
+alias rice='cd ~/dev/rice'
+
+# Development tools
+alias hx='helix'
+alias g='git'
+alias gst='git status'
+alias gd='git diff'
+alias gc='git commit'
+alias gp='git push'
+alias gl='git log --graph --abbrev-commit --decorate --format=format:"%C(bold blue)%h%C(reset) - %C(bold green)(%ar)%C(reset) %C(white)%s%C(reset) %C(dim white)- %an%C(reset)%C(auto)%d%C(reset)" --all'
+
+
+# System updates
+if command -v yay &> /dev/null; then
+    # Update both EndeavourOS and Arch mirrors, then update system
+    alias update='sudo eos-rankmirrors && yay --noconfirm'
+elif command -v apt &> /dev/null; then
+    alias update='sudo apt update && sudo apt upgrade'
+fi
 
 # Basic prompt if starship fails
 PS1='[\u@\h \W]\$ '
