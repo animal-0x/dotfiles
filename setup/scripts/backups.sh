@@ -12,7 +12,7 @@ for file in \
     "$HOME/.config/nushell/env.nu" \
     "$HOME/.config/nushell/mise.nu" \
     "$HOME/.config/foot/foot.ini" \
-    "$HOME/.config/alacritty/alacritty.yml" \ 
+    "$HOME/.config/alacritty/alacritty.toml" \ 
     "$HOME/.config/helix/config.toml" \
     "$HOME/.config/zellij/config.kdl" \
     "$HOME/.config/starship/starship.toml" \
