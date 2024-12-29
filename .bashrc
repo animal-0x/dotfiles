@@ -63,3 +63,5 @@ shopt -s histappend   # Append to history instead of overwriting
 HISTSIZE=10000
 HISTFILESIZE=20000
 HISTCONTROL=ignoreboth # Ignore duplicates and commands starting with space
+
+source /home/animal/.config/broot/launcher/bash/br

@@ -22,15 +22,15 @@ export def --env --wrapped main [command?: string, --help, ...rest: string] {
   let commands = ["deactivate", "shell", "sh"]
 
   if ($command == null) {
-    ^"/home/animal/.local/bin/mise"
+    ^"/usr/bin/mise"
   } else if ($command == "activate") {
     $env.MISE_SHELL = "nu"
   } else if ($command in $commands) {
-    ^"/home/animal/.local/bin/mise" $command ...$rest
+    ^"/usr/bin/mise" $command ...$rest
     | parse vars
     | update-env
   } else {
-    ^"/home/animal/.local/bin/mise" $command ...$rest
+    ^"/usr/bin/mise" $command ...$rest
   }
 }
 
@@ -49,7 +49,7 @@ def --env "update-env" [] {
 }
 
 def --env mise_hook [] {
-  ^"/home/animal/.local/bin/mise" hook-env -s nu
+  ^"/usr/bin/mise" hook-env -s nu
     | parse vars
     | update-env
 }
