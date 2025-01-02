@@ -1,0 +1,78 @@
+# Core
+ripgrep
+fd
+fzf
+zoxide
+eza
+bat
+duf
+dust
+watchexec
+
+# Terminal
+kitty
+foot
+alacritty
+zellij
+tmux
+
+# Shell
+starship
+nushell
+just
+direnv
+
+# Text/Code
+helix
+git-delta
+difftastic
+
+# Data
+jq
+yq
+miller
+
+# Monitoring
+btop
+gping
+bandwhich
+
+# Network
+mtr
+nmap
+socat
+tcpdump
+
+# Transfer
+croc
+rclone
+syncthing
+
+# Security
+age
+sops
+pass
+pass-otp
+wireguard-tools
+
+# Git
+lazygit
+
+# System
+p7zip
+unzip
+zstd
+ntfs-3g
+ffmpeg
+imagemagick
+
+# Document
+zathura
+zathura-pdf-mupdf
+nsxiv
+mpv
+yt-dlp
+pandoc
+
+# Fonts
+ttf-jetbrainsmono-nerd

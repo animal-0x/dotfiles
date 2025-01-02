@@ -1,0 +1,26 @@
+# Core Shell & Term
+nushell
+starship
+foot
+zellij
+fonts-jetbrains-mono-nerd
+
+# Core Tools
+helix
+git
+curl
+wget
+pkg-config
+build-essential
+
+# Dependencies
+libssl-dev
+fontconfig
+libfontconfig-dev
+libfreetype-dev
+libxkbcommon-dev
+
+# Optional but recommended
+ripgrep
+fd-find
+fzf
