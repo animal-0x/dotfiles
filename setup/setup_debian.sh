@@ -3,10 +3,8 @@
 # Add PPAs and external sources
 echo "Adding external package sources..."
 
-# Helix Editor PPA
+# Add all repositories
 sudo add-apt-repository -y ppa:maveonair/helix-editor
-
-# Fastfetch PPA 
 sudo add-apt-repository -y ppa:fastfetch/stable
 
 # Mise
@@ -14,12 +12,14 @@ sudo install -dm 755 /etc/apt/keyrings
 wget -qO - https://mise.jdx.dev/gpg-key.pub | gpg --dearmor | sudo tee /etc/apt/keyrings/mise-archive-keyring.gpg 1> /dev/null
 echo "deb [signed-by=/etc/apt/keyrings/mise-archive-keyring.gpg arch=amd64] https://mise.jdx.dev/deb stable main" | sudo tee /etc/apt/sources.list.d/mise.list
 
-# Update system first
-echo "Updating system..."
-sudo apt update && sudo apt upgrade -y
+# GitHub CLI
+wget -O- https://cli.github.com/packages/githubcli-archive-keyring.gpg | sudo tee /etc/apt/keyrings/githubcli-archive-keyring.gpg >/dev/null
+sudo chmod go+r /etc/apt/keyrings/githubcli-archive-keyring.gpg
+echo "deb [arch=$(dpkg --print-architecture) signed-by=/etc/apt/keyrings/githubcli-archive-keyring.gpg] https://cli.github.com/packages stable main" | sudo tee /etc/apt/sources.list.d/github-cli.list >/dev/null
 
-# Install packages from apt.list
-echo "Installing packages from apt..."
+# Update system and install apt packages
+echo "Updating system and installing packages..."
+sudo apt update && sudo apt upgrade -y
 sudo apt install -y $(grep -v '^#' "packages/apt")
 
 # Install Rust toolchain for cargo installs

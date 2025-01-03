@@ -9,16 +9,17 @@ fontconfig
 libfontconfig-dev
 libfreetype-dev
 libxkbcommon-dev
+gh
 
 # Terminal
-foot
 alacritty
+foot
 
-# Core Tools
+# Shell & Core Tools
 ripgrep
-fd-find
+fd-find      # note: called fd-find in debian
 fzf
-bat
+bat         # note: called batcat in debian
 jq
 yq
 
