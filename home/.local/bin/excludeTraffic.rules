@@ -1,0 +1,11 @@
+  table inet excludeTraffic {
+    chain allowIncoming {
+      type filter hook input priority -100; policy accept;
+      tcp dport 59202 ct mark set 0x00000f41 meta mark set 0x6d6f6c65;
+    }
+  
+    chain allowOutgoing {
+      type route hook output priority -100; policy accept;
+      tcp sport 59202 ct mark set 0x00000f41 meta mark set 0x6d6f6c65;
+    }
+  }

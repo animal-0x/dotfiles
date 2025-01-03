@@ -8,6 +8,7 @@ bat
 duf
 dust
 watchexec
+fastfetch
 
 # Terminal
 kitty
@@ -34,6 +35,7 @@ miller
 
 # Monitoring
 btop
+glances
 gping
 bandwhich
 
@@ -42,6 +44,12 @@ mtr
 nmap
 socat
 tcpdump
+iptraf-ng
+nethogs
+iftop
+mtr
+net-tools
+bind
 
 # Transfer
 croc
@@ -49,6 +57,10 @@ rclone
 syncthing
 
 # Security
+firewalld
+fail2ban
+ethtool
+macchanger
 age
 sops
 pass
@@ -74,5 +86,19 @@ mpv
 yt-dlp
 pandoc
 
-# Fonts
-ttf-jetbrainsmono-nerd
+# Icon Fonts
+ttf-font-awesome           
+ttf-material-design-icons  icons
+
+# Core Fonts
+noto-fonts
+noto-fonts-cjk
+noto-fonts-emoji
+noto-fonts-extra
+
+# System & Programming Fonts
+ttf-liberation
+ttf-ubuntu-font-family
+ttf-hack-nerd
+ttf-jetbrains-mono
+ttf-jetbrains-mono-nerd
