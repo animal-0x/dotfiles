@@ -17,11 +17,10 @@ foot
 
 # Shell & Core Tools
 ripgrep
-fd-find      # note: called fd-find in debian
+fd-find
 fzf
-bat         # note: called batcat in debian
+batcat
 jq
-yq
 
 # Monitoring & Network
 btop

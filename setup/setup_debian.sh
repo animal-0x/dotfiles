@@ -6,6 +6,7 @@ echo "Adding external package sources..."
 # Add all repositories
 sudo add-apt-repository -y ppa:maveonair/helix-editor
 sudo add-apt-repository -y ppa:fastfetch/stable
+sudo add-apt-repository -y ppa:aslatter/ppa
 
 # Mise
 sudo install -dm 755 /etc/apt/keyrings
@@ -47,19 +48,32 @@ sudo mv age/age /usr/local/bin/
 sudo mv age/age-keygen /usr/local/bin/
 cd - && rm -rf /tmp/age
 
-# Install latest nushell from release
-echo "Installing nushell..."
-NUSHELL_VERSION=$(curl -s https://api.github.com/repos/nushell/nushell/releases/latest | grep -oP '"tag_name": "\K(.*)(?=")')
-curl -Lo nushell.deb "https://github.com/nushell/nushell/releases/download/${NUSHELL_VERSION}/nu_${NUSHELL_VERSION#v}_amd64.deb"
-sudo dpkg -i nushell.deb
-rm nushell.deb
+# Install fastfetch from source
+git clone https://github.com/fastfetch-cli/fastfetch.git
+cd fastfetch
+mkdir -p build
+cd build
+cmake ..
+cmake --build . --target fastfetch --target flashfetch
+sudo cmake --install .
+cd ../..
+rm -rf fastfetch
 
-# Install latest SOPS from release
-echo "Installing SOPS..."
+# yq - install latest binary
+YQ_VERSION=$(curl -s https://api.github.com/repos/mikefarah/yq/releases/latest | grep -oP '"tag_name": "\K(.*)(?=")')
+wget https://github.com/mikefarah/yq/releases/download/${YQ_VERSION}/yq_linux_amd64 -O /usr/bin/yq
+chmod +x /usr/bin/yq
+
+# SOPS - install latest release
 SOPS_VERSION=$(curl -s https://api.github.com/repos/mozilla/sops/releases/latest | grep -oP '"tag_name": "\K(.*)(?=")')
-curl -Lo sops.deb "https://github.com/mozilla/sops/releases/download/${SOPS_VERSION}/sops_${SOPS_VERSION#v}_amd64.deb"
-sudo dpkg -i sops.deb
-rm sops.deb
+wget -O /usr/local/bin/sops https://github.com/mozilla/sops/releases/download/v${SOPS_VERSION}/sops-v${SOPS_VERSION}.linux.amd64
+chmod +x /usr/local/bin/sops
+
+# Nushell - install latest release
+wget https://github.com/nushell/nushell/releases/download/0.91.0/nu-0.91.0-x86_64-linux-gnu-full.tar.gz
+tar xzvf nu-0.91.0-x86_64-linux-gnu-full.tar.gz
+sudo cp nu-0.91.0-x86_64-unknown-linux-gnu/nu* /usr/local/bin/
+rm -rf nu-0.91.0-x86_64-unknown-linux-gnu*
 
 # Run common setup script
 echo "Running common setup..."
