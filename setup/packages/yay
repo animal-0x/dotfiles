@@ -35,6 +35,7 @@ miller
 
 # Monitoring
 btop
+htop
 glances
 gping
 bandwhich

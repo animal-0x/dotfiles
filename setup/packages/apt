@@ -1,26 +1,55 @@
-# Core Shell & Term
-nushell
-starship
-foot
-zellij
-fonts-jetbrains-mono-nerd
-
-# Core Tools
-helix
+# Core Build & Dev
+build-essential
 git
 curl
 wget
 pkg-config
-build-essential
-
-# Dependencies
 libssl-dev
 fontconfig
 libfontconfig-dev
 libfreetype-dev
 libxkbcommon-dev
 
-# Optional but recommended
+# Terminal
+foot
+alacritty
+
+# Core Tools
 ripgrep
 fd-find
 fzf
+bat
+jq
+yq
+
+# Monitoring & Network
+btop
+glances
+mtr
+nmap
+socat
+tcpdump
+net-tools
+iproute2
+iptraf-ng
+nethogs
+iftop
+htop
+
+# Security & System
+firewalld
+fail2ban
+ethtool
+wireguard
+
+# Utilities
+p7zip-full
+unzip
+zstd
+rsync
+ncdu
+
+# Fonts
+fonts-noto
+fonts-noto-cjk
+fonts-noto-color-emoji
