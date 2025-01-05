@@ -126,15 +126,51 @@ wget "https://github.com/sharkdp/bat/releases/download/${BAT_VERSION}/bat_${BAT_
 sudo dpkg -i "bat_${BAT_VERSION#v}_$ARCH.deb"
 rm "bat_${BAT_VERSION#v}_$ARCH.deb"
 
-# Install Helix (multi-arch support)
+# Install Helix
 echo "Installing Helix..."
-HELIX_VERSION=$(curl -s https://api.github.com/repos/helix-editor/helix/releases/latest | grep -oP '"tag_name": "\K(.*)(?=")')
-echo "Latest Helix version: ${HELIX_VERSION}"
-wget "https://github.com/helix-editor/helix/releases/download/${HELIX_VERSION}/helix-${HELIX_VERSION}-$ARCH-linux.tar.xz"
-tar -xvf "helix-${HELIX_VERSION}-$ARCH-linux.tar.xz"
-sudo cp -r "helix-${HELIX_VERSION}-$ARCH-linux/runtime" /usr/local/lib/helix/
-sudo install -Dm755 "helix-${HELIX_VERSION}-$ARCH-linux/hx" -t /usr/local/bin/
-rm -rf "helix-${HELIX_VERSION}-$ARCH-linux"*
+HELIX_VERSION="25.01"
+
+# Map architecture to GitHub's naming convention
+case "$ARCH" in
+    arm64|aarch64)
+        ARCH_DOWNLOAD="aarch64-linux"
+        ;;
+    amd64|x86_64)
+        ARCH_DOWNLOAD="x86_64-linux"
+        ;;
+    *)
+        echo "Unsupported architecture: $ARCH"
+        exit 1
+        ;;
+esac
+
+DOWNLOAD_URL="https://github.com/helix-editor/helix/releases/download/${HELIX_VERSION}/helix-${HELIX_VERSION}-${ARCH_DOWNLOAD}.tar.xz"
+
+echo "Downloading Helix from: $DOWNLOAD_URL"
+mkdir -p /tmp/helix
+cd /tmp/helix
+wget "$DOWNLOAD_URL"
+tar -xvf "helix-${HELIX_VERSION}-${ARCH_DOWNLOAD}.tar.xz"
+
+# Find the helix binary
+HELIX_BINARY=$(find . -type f -name "hx" | head -n 1)
+
+if [ -z "$HELIX_BINARY" ]; then
+    echo "Error: Could not find Helix binary"
+    exit 1
+fi
+
+echo "Found Helix binary at: $HELIX_BINARY"
+
+# Install the binary
+sudo install -Dm755 "$HELIX_BINARY" /usr/local/bin/hx
+
+# Install the runtime
+sudo cp -r "helix-${HELIX_VERSION}-${ARCH_DOWNLOAD}/runtime" /usr/local/lib/helix/
+
+# Clean up
+cd ~
+rm -rf /tmp/helix
 
 # Run common setup script
 echo "Running common setup..."
