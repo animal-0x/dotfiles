@@ -1,6 +1,9 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
+# Store the original directory
+ORIGINAL_DIR=$(pwd)
+
 # Detect architecture
 ARCH=$(dpkg --print-architecture)
 
@@ -30,7 +33,7 @@ cd build
 cmake ..
 cmake --build . --target fastfetch --target flashfetch
 sudo cmake --install .
-cd ../..
+cd "$ORIGINAL_DIR"  # Return to the original directory
 rm -rf fastfetch
 
 # Install Rust toolchain
@@ -45,13 +48,14 @@ echo "Installing cargo-based tools..."
 cargo install --locked zellij
 cargo install bandwhich
 
-# Install starship
+# Install starship (latest version)
 echo "Installing starship..."
-curl -sS https://starship.rs/install.sh | sudo sh -s -- -y
+STARSHIP_VERSION=$(curl -s https://api.github.com/repos/starship/starship/releases/latest | jq -r .tag_name)
+curl -sS "https://starship.rs/install.sh" | sudo sh -s -- -y
 
-# Install Nushell
+# Install Nushell (latest version)
 echo "Installing Nushell..."
-NUSHELL_VERSION="0.101.0"
+NUSHELL_VERSION=$(curl -s https://api.github.com/repos/nushell/nushell/releases/latest | jq -r .tag_name)
 
 # Map architecture to GitHub's naming convention
 case "$ARCH" in
@@ -66,7 +70,6 @@ case "$ARCH" in
         ;;
     *)
         echo "Unsupported architecture: $ARCH"
-        exit 1
         ;;
 esac
 
@@ -82,20 +85,14 @@ tar xvf "nu-$NUSHELL_VERSION-$ARCH_DOWNLOAD.tar.gz"
 NU_BINARY=$(find . -type f -name "nu" | head -n 1)
 
 if [ -z "$NU_BINARY" ]; then
-    echo "Error: Could not find nu binary"
-    exit 1
+    echo "Warning: Could not find nu binary"
+else
+    echo "Found binary at: $NU_BINARY"
+    sudo install -Dm755 "$NU_BINARY" /usr/local/bin/nu
 fi
 
-echo "Found binary at: $NU_BINARY"
-
-# Check binary details
-file "$NU_BINARY"
-
-# Install the binary
-sudo install -Dm755 "$NU_BINARY" /usr/local/bin/nu
-
 # Clean up
-cd ~
+cd "$ORIGINAL_DIR"
 rm -rf /tmp/nushell
 
 # Install Age (multi-arch support)
@@ -104,31 +101,31 @@ mkdir -p /tmp/age && cd /tmp/age
 curl -Lo age.tar.gz "https://dl.filippo.io/age/latest?for=linux/$ARCH"
 tar xf age.tar.gz
 sudo install -Dm755 age/age* -t /usr/local/bin/
-cd - && rm -rf /tmp/age
+cd "$ORIGINAL_DIR" && rm -rf /tmp/age
 
 # Install yq using binary release (multi-arch support)
 echo "Installing yq..."
-YQ_VERSION=$(curl -s https://api.github.com/repos/mikefarah/yq/releases/latest | grep -oP '"tag_name": "\K(.*)(?=")')
+YQ_VERSION=$(curl -s https://api.github.com/repos/mikefarah/yq/releases/latest | jq -r .tag_name)
 sudo wget "https://github.com/mikefarah/yq/releases/download/${YQ_VERSION}/yq_linux_$ARCH" -O /usr/local/bin/yq
 sudo chmod +x /usr/local/bin/yq
 
 # Install SOPS (multi-arch support)
 echo "Installing SOPS..."
-SOPS_VERSION=$(curl -s https://api.github.com/repos/getsops/sops/releases/latest | grep -oP '"tag_name": "v\K[^"]*')
+SOPS_VERSION=$(curl -s https://api.github.com/repos/getsops/sops/releases/latest | jq -r .tag_name)
 echo "Latest SOPS version: v${SOPS_VERSION}"
 sudo wget -O /usr/local/bin/sops "https://github.com/getsops/sops/releases/download/v${SOPS_VERSION}/sops-v${SOPS_VERSION}.linux.$ARCH"
 sudo chmod +x /usr/local/bin/sops
 
 # Install bat using binary release (multi-arch support)
 echo "Installing bat..."
-BAT_VERSION=$(curl -s https://api.github.com/repos/sharkdp/bat/releases/latest | grep -oP '"tag_name": "\K(.*)(?=")')
+BAT_VERSION=$(curl -s https://api.github.com/repos/sharkdp/bat/releases/latest | jq -r .tag_name)
 wget "https://github.com/sharkdp/bat/releases/download/${BAT_VERSION}/bat_${BAT_VERSION#v}_$ARCH.deb"
 sudo dpkg -i "bat_${BAT_VERSION#v}_$ARCH.deb"
 rm "bat_${BAT_VERSION#v}_$ARCH.deb"
 
-# Install Helix
+# Install Helix (latest version)
 echo "Installing Helix..."
-HELIX_VERSION="25.01"
+HELIX_VERSION=$(curl -s https://api.github.com/repos/helix-editor/helix/releases/latest | jq -r .tag_name)
 
 # Map architecture to GitHub's naming convention
 case "$ARCH" in
@@ -140,7 +137,6 @@ case "$ARCH" in
         ;;
     *)
         echo "Unsupported architecture: $ARCH"
-        exit 1
         ;;
 esac
 
@@ -156,24 +152,20 @@ tar -xvf "helix-${HELIX_VERSION}-${ARCH_DOWNLOAD}.tar.xz"
 HELIX_BINARY=$(find . -type f -name "hx" | head -n 1)
 
 if [ -z "$HELIX_BINARY" ]; then
-    echo "Error: Could not find Helix binary"
-    exit 1
+    echo "Warning: Could not find Helix binary"
+else
+    echo "Found Helix binary at: $HELIX_BINARY"
+    sudo install -Dm755 "$HELIX_BINARY" /usr/local/bin/hx
+    sudo cp -r "helix-${HELIX_VERSION}-${ARCH_DOWNLOAD}/runtime" /usr/local/lib/helix/
 fi
 
-echo "Found Helix binary at: $HELIX_BINARY"
-
-# Install the binary
-sudo install -Dm755 "$HELIX_BINARY" /usr/local/bin/hx
-
-# Install the runtime
-sudo cp -r "helix-${HELIX_VERSION}-${ARCH_DOWNLOAD}/runtime" /usr/local/lib/helix/
-
 # Clean up
-cd ~
+cd "$ORIGINAL_DIR"
 rm -rf /tmp/helix
 
 # Run common setup script
 echo "Running common setup..."
+cd "$ORIGINAL_DIR"  # Ensure we're back in the setup directory
 ./setup_common.sh
 
 echo "Setup complete! 🎊"
