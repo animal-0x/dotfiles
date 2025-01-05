@@ -49,13 +49,54 @@ cargo install bandwhich
 echo "Installing starship..."
 curl -sS https://starship.rs/install.sh | sudo sh -s -- -y
 
-# Install Nushell (multi-arch support)
+# Install Nushell
 echo "Installing Nushell..."
-NUSHELL_VERSION="0.91.0"
-wget "https://github.com/nushell/nushell/releases/download/$NUSHELL_VERSION/nu-$NUSHELL_VERSION-$ARCH-linux-gnu-full.tar.gz"
-tar xf "nu-$NUSHELL_VERSION-$ARCH-linux-gnu-full.tar.gz"
-sudo install -Dm755 "nu-$NUSHELL_VERSION-$ARCH-linux-gnu-full/nu"* -t /usr/local/bin/
-rm -rf "nu-$NUSHELL_VERSION-$ARCH-linux-gnu-full"*
+NUSHELL_VERSION="0.101.0"
+
+# Map architecture to GitHub's naming convention
+case "$ARCH" in
+    arm64|aarch64)
+        ARCH_DOWNLOAD="aarch64-unknown-linux-gnu"
+        ;;
+    amd64|x86_64)
+        ARCH_DOWNLOAD="x86_64-unknown-linux-gnu"
+        ;;
+    armv7)
+        ARCH_DOWNLOAD="armv7-unknown-linux-gnueabihf"
+        ;;
+    *)
+        echo "Unsupported architecture: $ARCH"
+        exit 1
+        ;;
+esac
+
+DOWNLOAD_URL="https://github.com/nushell/nushell/releases/download/$NUSHELL_VERSION/nu-$NUSHELL_VERSION-$ARCH_DOWNLOAD.tar.gz"
+
+echo "Downloading Nushell from: $DOWNLOAD_URL"
+mkdir -p /tmp/nushell
+cd /tmp/nushell
+wget "$DOWNLOAD_URL"
+tar xvf "nu-$NUSHELL_VERSION-$ARCH_DOWNLOAD.tar.gz"
+
+# Find the nu binary
+NU_BINARY=$(find . -type f -name "nu" | head -n 1)
+
+if [ -z "$NU_BINARY" ]; then
+    echo "Error: Could not find nu binary"
+    exit 1
+fi
+
+echo "Found binary at: $NU_BINARY"
+
+# Check binary details
+file "$NU_BINARY"
+
+# Install the binary
+sudo install -Dm755 "$NU_BINARY" /usr/local/bin/nu
+
+# Clean up
+cd ~
+rm -rf /tmp/nushell
 
 # Install Age (multi-arch support)
 echo "Installing age..."
