@@ -37,7 +37,8 @@ alias lab='cd ~/dev/lab'
 alias rice='cd ~/dev/rice'
 
 # Development tools
-alias hx='helix'
+# alias hx='helix'
+command -v hx >/dev/null 2>&1 || alias hx='helix'
 alias g='git'
 alias gst='git status'
 alias gd='git diff'
@@ -64,4 +65,4 @@ HISTSIZE=10000
 HISTFILESIZE=20000
 HISTCONTROL=ignoreboth # Ignore duplicates and commands starting with space
 
-source /home/animal/.config/broot/launcher/bash/br
+# source /home/animal/.config/broot/launcher/bash/br

@@ -75,8 +75,8 @@ $env.ENV_CONVERSIONS = {
 
 # Search directories
 $env.NU_LIB_DIRS = [
-    ($nu.default-config-dir | path join 'scripts')  # Local scripts
-    ($nu.data-dir | path join 'completions')        # Completions
+    ($nu.default-config-dir | path join 'scripts') 
+    ($nu.default-config-dir | path join 'completions')       
 ]
 
 # Plugin directories

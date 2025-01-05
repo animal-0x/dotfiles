@@ -4,12 +4,15 @@ git
 curl
 wget
 pkg-config
+cmake
+python3-pip
 libssl-dev
-fontconfig
-libfontconfig-dev
 libfreetype-dev
+libfontconfig-dev
 libxkbcommon-dev
+fontconfig
 gh
+tree
 
 # Terminal
 alacritty
@@ -19,7 +22,7 @@ foot
 ripgrep
 fd-find
 fzf
-batcat
+# batcat
 jq
 
 # Monitoring & Network

@@ -1,7 +1,6 @@
 # Nushell Config File
 use ($nu.default-config-dir | path join mise.nu)
 
-
 # Define aliases
 alias .. = cd ..
 alias ... = cd ../..
@@ -16,19 +15,13 @@ alias lab = cd ~/dev/lab
 alias rice = cd ~/dev/rice
 
 # Development tools
-alias hx = helix
+# alias hx = helix
 alias g = git
 alias gst = git status
 alias gd = git diff
 alias gc = git commit
 alias gp = git push
 alias gl = git log --graph --abbrev-commit --decorate --format=format:"%C(bold blue)%h%C(reset) - %C(bold green)(%ar)%C(reset) %C(white)%s%C(reset) %C(dim white)- %an%C(reset)%C(auto)%d%C(reset)" --all
-
-
-
-
-
-
 
 # System update alias (distro-aware)
 def update [] {
@@ -41,7 +34,15 @@ def update [] {
     }
 }
 
-# Pro-style theme focused on readability
+def hx [...args] {
+    if (which hx | is-empty) {
+        helix $args
+    } else {
+        ^hx $args
+    }
+}
+
+# Theme
 let dark_theme = {
     # Base formatting
     separator: white
@@ -125,13 +126,6 @@ $env.config = {
             wrapping_try_keep_words: true
             truncating_suffix: "..."
         }
-    }
-    
-    # Error handling
-    error_style: "fancy"
-    display_errors: {
-        exit_code: false
-        termination_signal: true
     }
     
     # History
@@ -226,13 +220,6 @@ $env.config = {
             keycode: char_x
             mode: emacs
             event: { edit: cutselection }
-        }
-        {
-            name: paste
-            modifier: control_shift
-            keycode: char_v
-            mode: [emacs, vi_normal, vi_insert]
-            event: { edit: paste }
         }
         # Navigation
         {
@@ -334,4 +321,4 @@ $env.config = {
     ]
 }
 
-use '/home/animal/.config/broot/launcher/nushell/br' *
+# use '/home/animal/.config/broot/launcher/nushell/br' *
