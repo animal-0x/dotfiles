@@ -145,19 +145,21 @@ find . -type f -name "nu" -exec sudo install -Dm755 {} /usr/local/bin/nu \;
 find . -type f -name "nu_plugin_*" -exec sudo install -Dm755 {} /usr/local/bin/ \;
 
 # Install Helix editor
-echo "Installing Helix..."
-cd "$TEMP_DIR"
-HELIX_URL=$(get_latest_release_url "helix-editor/helix" "$HELIX_ARCH.tar.xz")
-check_command wget "$HELIX_URL"
-check_command tar xf helix-*-"${HELIX_ARCH}".tar.xz
-helix_dir=$(find . -type d -name "helix-*-${HELIX_ARCH}" | head -n1)
-if [[ -z "$helix_dir" ]]; then
-    echo "Error: Could not find Helix directory after extraction"
-    exit 1
+echo "Installing Helix from source..."
+
+# Need cmake for building helix
+if ! command -v cmake &> /dev/null; then
+    check_command sudo apt-get install -y cmake pkg-config librust-libgit2-dev
 fi
+
+cd "$TEMP_DIR"
+check_command git clone --depth=1 https://github.com/helix-editor/helix
+cd helix
+echo "Building Helix... this may take a few minutes"
+check_command cargo build --release
+check_command sudo install -Dm755 target/release/hx /usr/local/bin/hx
 sudo mkdir -p /usr/local/lib/helix
-sudo cp -r "${helix_dir}/runtime" /usr/local/lib/helix/
-check_command sudo install -Dm755 "${helix_dir}/hx" /usr/local/bin/hx
+check_command sudo cp -r runtime /usr/local/lib/helix/
 
 # Install Age
 echo "Installing Age..."
@@ -185,7 +187,7 @@ echo "Installing bat..."
 cd "$TEMP_DIR"
 BAT_URL=$(get_latest_release_url "sharkdp/bat" "${ARCH}.deb")
 check_command wget "$BAT_URL"
-check_command sudo dpkg -i bat_*_${ARCH}.deb
+check_command sudo dpkg -i bat*${ARCH}.deb # Handle both bat_ and bat-musl_ patterns
 
 # Run common setup
 echo "Running common setup..."
