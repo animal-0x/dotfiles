@@ -1,206 +1,103 @@
 #!/usr/bin/env bash
 
-# Exit on error, unset variables, and pipe failures
-set -euo pipefail
+set -e
 
-# Script variables
-SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
-ORIGINAL_DIR=$(pwd)
-ARCH=$(dpkg --print-architecture)
-LOG_DIR="$HOME/.local/log"
-LOG_FILE="$LOG_DIR/setup-$(date +%Y%m%d-%H%M%S).log"
+# Install packages from apt list
+echo "Installing apt packages..."
+sudo apt-get update
+sudo apt-get install -y $(grep -v '^#' "packages/apt")
 
-# Create log directory
-mkdir -p "$LOG_DIR"
+# Install mise if not present
+if ! command -v mise &> /dev/null; then
+    echo "Installing mise..."
+    curl https://mise.run | sh
+    export PATH="$HOME/.local/bin:$PATH"
+fi
 
-# Logging functions
-log() { echo "[$(date +'%Y-%m-%d %H:%M:%S')] $*" | tee -a "$LOG_FILE"; }
-log_error() { log "ERROR: $*" >&2; }
-log_success() { log "SUCCESS: $*"; }
-log_info() { log "INFO: $*"; }
+# Activate mise
+eval "$(mise activate bash)"
 
-# Cleanup trap
-cleanup() {
-    local exit_code=$?
-    log "Cleaning up..."
-    [[ -n "${TEMP_DIR:-}" ]] && rm -rf "$TEMP_DIR"
-    [[ -n "${ORIGINAL_DIR:-}" ]] && cd "$ORIGINAL_DIR"
-    if [[ $exit_code -ne 0 ]]; then
-        log_error "Script failed. Check $LOG_FILE for details."
-    fi
-    exit $exit_code
-}
-trap cleanup EXIT
+# Install language runtimes first
+echo "Installing language runtimes..."
+mise use --global node@lts
+mise use --global rust@stable
+mise use --global go@latest
 
-# Helper functions
-check_command() {
-    if ! "$@"; then
-        log_error "Command failed: $*"
-        return 1
-    fi
-}
+# Install core tools via mise
+echo "Installing development tools..."
+tools=(
+    "node@latest"
+    "cargo:nu@latest"
+    "zellij@latest"
+    "starship@latest"
+    "ripgrep@latest"
+    "fd@latest"
+    "fzf@latest"
+    "jq@latest"
+    "gh@latest"
+    "shellcheck@latest"
+    "shfmt@latest"
+    "zoxide@latest"
+    "eza@latest"
+    "bat@latest"
+)
 
-check_dependency() {
-    local cmd=$1
-    if ! command -v "$cmd" >/dev/null 2>&1; then
-        return 1
-    fi
-    return 0
-}
+for tool in "${tools[@]}"; do
+    mise use --global "$tool"
+done
 
-install_basic_dependencies() {
-    log "Installing basic build dependencies..."
-    sudo apt-get update
-    sudo apt-get install -y \
-        build-essential \
-        pkg-config \
-        curl \
-        git \
-        libssl-dev \
-        libfontconfig-dev \
-        libfreetype-dev \
-        libxkbcommon-dev \
-        python3-pip \
-        cmake
-}
+# Build foot terminal
+if ! command -v foot &> /dev/null; then
+    echo "Building foot..."
+    git clone https://codeberg.org/dnkl/foot.git
+    cd foot
+    meson setup build
+    ninja -C build
+    sudo ninja -C build install
+    cd ..
+    rm -rf foot
+fi
 
-setup_mise() {
-    if ! check_dependency mise; then
-        log "Installing mise..."
-        curl https://mise.run | sh
-        
-        # Add mise to current shell
-        export PATH="$HOME/.local/bin:$PATH"
-    fi
-    
-    # Configure mise and activate it
-    log "Configuring mise..."
-    export MISE_SKIP_ACTIVATE=1
-    
-    # Install core tools one by one
-    log "Setting up Node.js..."
-    mise use --global node@20
-    
-    log "Setting up Rust..."
-    mise use --global rust@stable
-    
-    log "Setting up Go..."
-    mise use --global go@latest
-    
-    log "Installing tools..."
-    mise install
+# Install Helix
+# Store the original directory
+original_dir=$(pwd)
 
-    # Since helix isn't directly supported by mise, we'll install it through cargo
-    log "Installing Helix via Cargo..."
-    mise x rust -- cargo install --git https://github.com/helix-editor/helix helix-term
-    
-    # Set up Helix runtime
-    log "Setting up Helix runtime..."
-    if [[ ! -d "$HOME/.config/helix/runtime" ]]; then
-        git clone --depth=1 https://github.com/helix-editor/helix
-        mkdir -p "$HOME/.config/helix"
-        cp -r helix/runtime "$HOME/.config/helix/"
-        rm -rf helix
-    fi
-    
-    # Activate mise in current shell
-    eval "$(mise activate bash)"
-}
+# Create a temporary directory
+tmp_dir=$(mktemp -d)
+cd "$tmp_dir"
 
-install_tools_via_mise() {
-    log "Installing development tools via mise..."
-    
-    # Install language servers and tools via npm
-    mise x node -- npm install -g \
-        bash-language-server \
-        typescript-language-server \
-        vscode-langservers-extracted \
-        yaml-language-server
+# Clone the repository
+git clone https://github.com/helix-editor/helix
+cd helix
 
-    # Install Rust tools
-    mise x rust -- cargo install \
-        zellij \
-        bandwhich \
-        starship
-}
+# Build and install
+cargo install --path helix-term --locked
 
-install_system_tools() {
-    log "Installing essential system tools..."
-    sudo apt-get install -y \
-        ripgrep \
-        fd-find \
-        fzf \
-        bat \
-        htop \
-        btop \
-        socat \
-        tcpdump \
-        iptraf-ng \
-        nethogs \
-        mtr \
-        nmap \
-        jq \
-        ethtool \
-        net-tools \
-        fonts-noto \
-        fonts-noto-cjk \
-        fonts-noto-color-emoji
-}
+# Prepare the runtime directory in ~/.config/helix
+if [ -e ~/.config/helix/runtime ]; then
+    rm -rf ~/.config/helix/runtime
+fi
+mkdir -p ~/.config/helix
+cp -r runtime ~/.config/helix/
 
-install_go_tools() {
-    log "Installing Go tools..."
-    mise x go -- go install filippo.io/age/cmd/...@latest
-    mise x go -- go install github.com/mozilla/sops/v3/cmd/sops@latest
-}
+# Create symlink in cargo bin directory
+cargo_bin_dir=$(dirname $(which hx))
+ln -s ~/.config/helix/runtime "$cargo_bin_dir/runtime"
 
-verify_installation() {
-    log "Verifying installations..."
-    local tools=(
-        "hx:Helix"
-        "zellij:Zellij"
-        "starship:Starship"
-        "age:Age"
-        "sops:SOPS"
-        "bash-language-server:Bash Language Server"
-        "bandwhich:Bandwhich"
-    )
-    
-    for tool in "${tools[@]}"; do
-        local cmd=${tool%:*}
-        local name=${tool#*:}
-        if check_dependency "$cmd"; then
-            local version
-            version=$("$cmd" --version 2>/dev/null || echo 'version unknown')
-            log_success "$name: $version"
-        else
-            log_error "$name: NOT FOUND"
-        fi
-    done
-}
+# Verify installation
+hx --health
 
-# Remove the setup_helix_runtime function as it's now handled during installation
+# Return to the original directory and clean up
+cd "$original_dir"
+rm -rf "$tmp_dir"
 
-main() {
-    log "Starting setup with mise-focused installation..."
-    
-    # Essential setup
-    install_basic_dependencies
-    setup_mise
-    
-    # Tool installation
-    install_tools_via_mise
-    install_system_tools
-    install_go_tools
-    
-    # Post-installation activities would go here if needed
-    
-    # Common setup and verification
-    cd "$ORIGINAL_DIR"
-    check_command ./setup_common.sh
-    verify_installation
-    
-    log "Setup completed successfully! 🎉"
-    log "Remember to restart your shell or run 'source ~/.bashrc' to use mise"
-}
+# Install bash language server
+npm install -g bash-language-server
 
-main "$@"
+bash-language-server --help
+hx --health
+
+# Run common setup
+./setup_common.sh
+
+echo "Setup complete! 🎊"

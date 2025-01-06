@@ -1,37 +1,26 @@
-# Core Build & Dev
+# Build dependencies (needed for building tools)
 build-essential
-shellcheck
-shfmt
-shellcheck
-shfmt
-git
-curl
-wget
 pkg-config
 cmake
-python3-pip
 libssl-dev
 libfreetype-dev
 libfontconfig-dev
 libxkbcommon-dev
-fontconfig
-gh
-tree
-golang-go
 
-# Terminal
-alacritty
-foot
+# Terminal build dependencies
+meson
+ninja-build
+scdoc
+libwayland-dev
+libfcft-dev
+libharfbuzz-dev
 
-# Shell & Core Tools
-ripgrep
-fd-find
-fzf
-jq
-
-# Monitoring & Network
+# Core system tools
+git
+curl
+wget
+htop
 btop
-glances
 mtr
 nmap
 socat
@@ -41,20 +30,19 @@ iproute2
 iptraf-ng
 nethogs
 iftop
-htop
 
-# Security & System
-firewalld
-fail2ban
-ethtool
-wireguard
-
-# Utilities
+# System utilities
 p7zip-full
 unzip
 zstd
 rsync
 ncdu
+
+# Security
+firewalld
+fail2ban
+ethtool
+wireguard
 
 # Fonts
 fonts-noto
