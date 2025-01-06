@@ -30,6 +30,7 @@ iproute2
 iptraf-ng
 nethogs
 iftop
+direnv
 
 # System utilities
 p7zip-full
