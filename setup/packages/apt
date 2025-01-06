@@ -1,5 +1,9 @@
 # Core Build & Dev
 build-essential
+shellcheck
+shfmt
+shellcheck
+shfmt
 git
 curl
 wget
@@ -13,6 +17,7 @@ libxkbcommon-dev
 fontconfig
 gh
 tree
+golang-go
 
 # Terminal
 alacritty
@@ -22,7 +27,6 @@ foot
 ripgrep
 fd-find
 fzf
-# batcat
 jq
 
 # Monitoring & Network
