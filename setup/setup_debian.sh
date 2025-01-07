@@ -3,6 +3,7 @@ set -euo pipefail
 
 TMP_DIR="/tmp/setup-tools"
 ARCH="$(dpkg --print-architecture)"
+WORKING_DIR="$(pwd)"
 
 # Clean start
 sudo rm -rf "${TMP_DIR}"
@@ -46,11 +47,12 @@ export PATH="$HOME/.local/bin:$PATH"
 eval "$(mise activate bash)"
 
 # Install language runtimes and tools
-mise use --global "node@lts" "rust@stable" "go@latest" "python@latest"
-mise use --global "node@latest" "cargo:nu@latest" "zellij@latest" "starship@latest" \
+mise use --global "node@lts" "rust@stable" "go@latest" "python@latest" \
+    "cargo:nu@latest" "zellij@latest" "starship@latest" \
     "ripgrep@latest" "fd@latest" "fzf@latest" "jq@latest" "gh@latest" \
     "shellcheck@latest" "shfmt@latest" "zoxide@latest" "eza@latest" \
-    "bat@latest" "cargo:watchexec-cli@latest" "cargo:just@latest"
+    "bat@latest" "cargo:watchexec-cli@latest" "cargo:just@latest" \
+    "meson@latest" "cmake@latest" 
 
 # Map Debian architectures for different naming schemes
 case "${ARCH}" in
@@ -108,5 +110,6 @@ npm install -g bash-language-server
 # Clean up
 sudo rm -rf "${TMP_DIR}"
 
+cd "${WORKING_DIR}"
 # Run common setup
 ./setup_common.sh
