@@ -36,9 +36,9 @@ def update [] {
 
 def hx [...args] {
     if (which hx | is-empty) {
-        helix $args
+       ^hx ...$args
     } else {
-        ^hx $args
+        ^helix ...$args
     }
 }
 

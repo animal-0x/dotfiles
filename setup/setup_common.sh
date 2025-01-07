@@ -18,4 +18,7 @@ echo "Linking configurations..."
 # Call refresh_links to handle all symlinking
 ./refresh_links.sh
 
+echo "Spawning local configs"
+touch ~/.config/foot/local.ini
+
 echo "Common setup complete!"

@@ -27,6 +27,7 @@ direnv
 helix
 git-delta
 difftastic
+bash-language-server
 
 # Data
 jq

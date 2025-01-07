@@ -35,18 +35,23 @@ install_github_binary() {
     fi
     
     sudo install "${TMP_DIR}/bin/${binary}" /usr/local/bin/
+    cd "${WORKING_DIR}"
+    sudo rm -f "${binary}"
 }
 
 # Install apt packages
+cd "${WORKING_DIR}"
 sudo apt-get update
 sudo apt-get install -y $(grep -v '^#\|^$' "packages/apt")
 
 # Install mise
+cd "${WORKING_DIR}"
 curl https://mise.run | sh
 export PATH="$HOME/.local/bin:$PATH"
 eval "$(mise activate bash)"
 
 # Install language runtimes and tools
+cd "${WORKING_DIR}"
 mise use --global "node@lts" "rust@stable" "go@latest" "python@latest" \
     "cargo:nu@latest" "zellij@latest" "starship@latest" \
     "ripgrep@latest" "fd@latest" "fzf@latest" "jq@latest" "gh@latest" \
@@ -54,7 +59,7 @@ mise use --global "node@lts" "rust@stable" "go@latest" "python@latest" \
     "bat@latest" "cargo:watchexec-cli@latest" "cargo:just@latest" \
     "meson@latest" "cmake@latest" 
 
-# Map Debian architectures for different naming schemes
+# Map Debian architectures
 case "${ARCH}" in
     "amd64") 
         arch_croc="64bit"
@@ -79,6 +84,7 @@ case "${ARCH}" in
 esac
 
 # Install GitHub tools
+cd "${WORKING_DIR}"
 install_github_binary "mozilla/sops" "sops" "sops-v{VERSION}.linux.${ARCH}" false
 install_github_binary "mikefarah/yq" "yq" "yq_linux_${ARCH}" false
 install_github_binary "jesseduffield/lazygit" "lazygit" "lazygit_{VERSION}_Linux_${arch_lazygit}.tar.gz" true
@@ -91,10 +97,13 @@ cd "${TMP_DIR}"
 git clone https://github.com/helix-editor/helix
 cd helix
 cargo install --path helix-term --locked
-mkdir -p ~/.config/helix
-rm -rf ~/.config/helix/runtime
-cp -r runtime ~/.config/helix/
-ln -sf ~/.config/helix/runtime "$(dirname $(which hx))/runtime"
+
+# Setup Helix runtime
+HELIX_RUNTIME_PATH="$(dirname $(which hx))/runtime"
+mkdir -p "${HOME}/.config/helix"
+rm -rf "${HOME}/.config/helix/runtime"
+cp -r "${TMP_DIR}/helix/runtime" "${HOME}/.config/helix/"
+ln -sf "${HOME}/.config/helix/runtime" "${HELIX_RUNTIME_PATH}"
 
 # Install foot
 cd "${TMP_DIR}"
@@ -105,11 +114,13 @@ ninja -C build
 sudo ninja -C build install
 
 # Install bash language server
+cd "${WORKING_DIR}"
 npm install -g bash-language-server
+sudo rm -rf node_modules
 
-# Clean up
+# Final cleanup
+cd "${WORKING_DIR}"
 sudo rm -rf "${TMP_DIR}"
 
-cd "${WORKING_DIR}"
 # Run common setup
 ./setup_common.sh
