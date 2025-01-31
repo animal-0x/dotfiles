@@ -1,0 +1,13 @@
+format = "$all$fill$time$line_break$character"
+
+[time]
+disabled = false
+format = '[$time]($style)'
+time_format = "%H:%M"
+
+[character]
+success_symbol = "❯ "
+error_symbol = "❯ "
+
+[fill]
+symbol = " "

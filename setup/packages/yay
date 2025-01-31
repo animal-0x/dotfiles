@@ -1,0 +1,106 @@
+# Core
+ripgrep
+fd
+fzf
+zoxide
+eza
+bat
+duf
+dust
+watchexec
+fastfetch
+
+# Terminal
+kitty
+foot
+alacritty
+zellij
+tmux
+
+# Shell
+starship
+nushell
+just
+direnv
+
+# Text/Code
+helix
+git-delta
+difftastic
+bash-language-server
+
+# Data
+jq
+yq
+miller
+
+# Monitoring
+btop
+htop
+glances
+gping
+bandwhich
+
+# Network
+mtr
+nmap
+socat
+tcpdump
+iptraf-ng
+nethogs
+iftop
+mtr
+net-tools
+bind
+
+# Transfer
+croc
+rclone
+syncthing
+
+# Security
+firewalld
+fail2ban
+ethtool
+macchanger
+age
+sops
+pass
+pass-otp
+wireguard-tools
+
+# Git
+lazygit
+
+# System
+p7zip
+unzip
+zstd
+ntfs-3g
+ffmpeg
+imagemagick
+
+# Document
+zathura
+zathura-pdf-mupdf
+nsxiv
+mpv
+yt-dlp
+pandoc
+
+# Icon Fonts
+ttf-font-awesome           
+ttf-material-design-icons  icons
+
+# Core Fonts
+noto-fonts
+noto-fonts-cjk
+noto-fonts-emoji
+noto-fonts-extra
+
+# System & Programming Fonts
+ttf-liberation
+ttf-ubuntu-font-family
+ttf-hack-nerd
+ttf-jetbrains-mono
+ttf-jetbrains-mono-nerd

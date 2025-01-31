@@ -1,0 +1,52 @@
+# Build dependencies (needed for building tools)
+build-essential
+pkg-config
+cmake
+libssl-dev
+libfreetype-dev
+libfontconfig-dev
+libxkbcommon-dev
+libpixman-1-dev
+
+# Terminal build dependencies
+meson
+ninja-build
+scdoc
+libwayland-dev
+libfcft-dev
+libharfbuzz-dev
+
+# Core system tools
+git
+curl
+wget
+htop
+btop
+mtr
+nmap
+socat
+tcpdump
+net-tools
+iproute2
+iptraf-ng
+nethogs
+iftop
+direnv
+
+# System utilities
+p7zip-full
+unzip
+zstd
+rsync
+ncdu
+
+# Security
+firewalld
+fail2ban
+ethtool
+wireguard
+
+# Fonts
+fonts-noto
+fonts-noto-cjk
+fonts-noto-color-emoji

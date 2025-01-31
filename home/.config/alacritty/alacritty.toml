@@ -1,0 +1,68 @@
+[env]
+TERM = "xterm"
+
+[terminal]
+shell = {program ="/usr/bin/nu"}
+
+[window]
+padding = { x = 12, y = 12 }
+dimensions = { columns = 133, lines = 40 }  # Approximate 1200x700
+startup_mode = "Windowed"
+dynamic_title = true
+opacity = 0.95
+
+[font]
+normal = { family = "JetBrainsMono Nerd Font" }
+size = 10.0
+
+[scrolling]
+history = 10000
+multiplier = 3
+
+[selection]
+save_to_clipboard = true
+semantic_escape_chars = ",│`|:\"'()[]{}<>"
+
+[mouse]
+hide_when_typing = true
+
+[colors.primary]
+background = "#000000"
+foreground = "#a3aed2"
+
+[colors.normal]
+black = "#212736"    # darker blue
+red = "#ff757f"
+blue = "#769ff0"
+white = "#c0caf5"
+green = "#769ff0"    # using blue as placeholder
+yellow = "#a3aed2"   # using light grey
+magenta = "#9d7cd8"
+cyan = "#66D9EF"
+
+[colors.bright]
+black = "#394260"
+red = "#ff9da4"
+blue = "#9ab9f5"
+white = "#d5deff"
+green = "#9ab9f5"    # using bright blue as placeholder
+yellow = "#c2caed"   # using bright grey
+magenta = "#bb99f0"
+cyan = "#8BE9FD"
+
+[colors.selection]
+text = "#1d2230"
+background = "#a3aed2"
+
+[[keyboard.bindings]]
+key = "C"
+mods = "Control|Shift"
+action = "Copy"
+
+[[keyboard.bindings]]
+key = "V"
+mods = "Control|Shift"
+action = "Paste"
+
+[cursor]
+style = { shape = "Block" }

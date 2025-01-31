@@ -1,0 +1,50 @@
+theme = "dark_high_contrast"
+
+[editor]
+line-number = "relative"
+mouse = false
+bufferline = "multiple"
+true-color = true
+color-modes = true
+cursorline = true
+rulers = [80,120]
+auto-format= true
+
+[editor.auto-save]
+enable = true
+timeout = 1000
+
+[editor.cursor-shape]
+insert = "bar"
+normal = "block"
+select = "underline"
+
+[editor.indent-guides]
+render = true
+character = "▏"
+skip-levels = 1
+
+[editor.soft-wrap]
+enable = true
+
+[editor.lsp]
+display-messages = true
+display-inlay-hints = true
+
+
+[editor.statusline]
+left = ["mode", "spinner", "file-name", "file-modification-indicator", "version-control"]
+center = ["diagnostics", "workspace-diagnostics"]
+right = ["selections", "position", "file-encoding"]
+
+[editor.auto-pairs]
+'(' = ')'
+'{' = '}'
+'[' = ']'
+'"' = '"'
+'`' = '`'
+'<' = '>'
+
+# [editor.whitespace]
+# render = "all"
+# characters = { space = "·", nbsp = "⍽", tab = "→", newline = "⏎", tabpad = "·" }
